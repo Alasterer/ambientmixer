@@ -27,7 +27,7 @@ If you're a windows user, you can download the installer from
 ## Authors
 
 * **Philooz** - *Initial work* - [Philooz](https://github.com/Philooz)
-* **Alasterer** - *Addition of GUI and more features* - [Alasterer]((https://github.com/Alasterer)
+* **Alasterer** - *Addition of GUI and more features* - [Alasterer](https://github.com/Alasterer)
 
 ## License
 
