@@ -24,6 +24,42 @@ If you're a windows user, you can download the installer from
 
 [https://www.freac.org/](https://www.freac.org/)
 
+### Installing
+
+Just store ```ambient_mixer.py``` and ```ambient_downloader.py``` anywhere on your system.
+
+## Downloading a mix
+
+Easy. Get to the mix you'd like to keep. In this example, I went with "**Night in a Medieval Monastery**".
+
+Just run ```ambient_downloader.py``` with the url.
+
+In our example :
+
+```python3 ambient_downloader.py http://religion.ambient-mixer.com/night-in-a-medieval-monastery```
+
+which will give us
+
+```Saved http://xml.ambient-mixer.com/audio-template?player=html5&id_template=48152 as presets/night-in-a-medieval-monastery.xml.
+Saved http://xml.ambient-mixer.com/audio/9/5/7/957298df7abb5d7e94e6323c45d94063.mp3 as sounds/3677.mp3.
+Saved http://xml.ambient-mixer.com/audio/d/3/3/d33c249dc7497e59091fab0ef08ee283.mp3 as sounds/529.mp3.
+Saved http://xml.ambient-mixer.com/audio/a/0/1/a015edfc739fd3c7d942823511ba869d.mp3 as sounds/329.mp3.
+Saved http://xml.ambient-mixer.com/audio/4/9/a/49a0e9aef698b60cf2c43312225778b9.mp3 as sounds/5745.mp3.
+Saved http://xml.ambient-mixer.com/audio/3/b/6/3b64e0b6dffd39bd239e8071c25a4f37.mp3 as sounds/4583.mp3.
+Saved http://xml.ambient-mixer.com/audio/7/8/e/78ece9cbea4fe23031c07ce15278f84a.mp3 as sounds/3354.mp3.
+Saved http://xml.ambient-mixer.com/audio/7/5/e/75e7d0a3c6c6ef6ed69b26e7098b208c.mp3 as sounds/6432.mp3.
+Saved http://xml.ambient-mixer.com/audio/1/6/8/168498dfdf8743eefb46dfebfd09c9eb.mp3 as sounds/6773.mp3.
+```
+
+Once the downloads are complete, you'll get two folders inside the current directory : ```sounds_named```, which contains all the sounds files you've downloaded (already converted from .mp3 to .ogg); and ```presets``` which holds all the .xml files corresponding to the presets.
+
+
+### TODOS and possible bugs
+
+* Crossfade needs to be implemented with fade switching between 2 identical tracks
+* Download of presets via GUI with support for multiple links (large textbox)
+* ...
+
 ## Authors
 
 * **Philooz** - *Initial work* - [Philooz](https://github.com/Philooz)
