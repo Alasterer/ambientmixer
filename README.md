@@ -71,15 +71,15 @@ Once you downloaded your mix, and you've converted the files, just play it with 
 There are two ways to start playback of a preset:
 1. Start script with preset file as parameter. Open ```ambient_mixer.py``` by calling
 
-```python ambient_mixer.py presets/night-in-a-medieval-monastery.xml```
+   ```python ambient_mixer.py presets/night-in-a-medieval-monastery.xml```
 
 2. Start script without preset file and select file in GUI. 
 
-  * Open ```ambient_mixer.py``` by calling
+* Open ```ambient_mixer.py``` by calling
   
    ```python ambient_mixer.py```
     
-  * Click on *File* > *Open...* > select preset file and confirm with *OK*
+* Click on *File* > *Open...* > select preset file and confirm with *OK*
 
 You should see 
 ```Loaded Channel 0 : Gregorian Chant 2 (looping), 3677.ogg (volume 21, balance 0).
