@@ -75,9 +75,9 @@ There are two ways to start playback of a preset:
 
 2. Start script without preset file and select file in GUI. 
 
-* Open ```ambient_mixer.py``` by calling
+   * Open ```ambient_mixer.py``` by calling
   
-   ```python ambient_mixer.py```
+      ```python ambient_mixer.py```
     
 * Click on *File* > *Open...* > select preset file and confirm with *OK*
 
