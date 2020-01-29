@@ -94,6 +94,13 @@ Loaded Channel 7 : Writing with a quill (looping), 6773.ogg (volume 96, balance 
 
 Relax and enjoy your mix! :)
 
+### Convert python script to exe (windows)
+
+Since I will be running this script on multiple machines I do not want to install the python enviroment on all of them.
+Therefore I made a batch script to convert the python script to a simple .exe file.
+I chose to not pack everything into one .exe file since that gives me the opportunity to delete unneeded .dll files
+(unwanted packages). Pyinstaller currently has the 
+
 ### TODOS and possible bugs
 
 * Crossfade needs to be implemented with fade switching between 2 identical tracks
