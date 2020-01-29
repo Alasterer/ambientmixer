@@ -1,4 +1,4 @@
-# ambientmixer - a graphical Python player with pygame to play and edit ambient-mixer.com mixes locally
+# ambientmixer - A graphical multitrack audio player written in python utilizing pygame to play, edit and save ambient-mixer.com mixes locally
 This script is based on Philooz's great script found here
 
 https://github.com/Philooz/pyambientmixer
