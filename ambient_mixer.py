@@ -11,6 +11,7 @@ Options:
 __author_original__      = "Philooz"
 __author__      = "Alaster"
 __copyright__   = "2017 GPL"
+__version__     = "V0.15"
 
 # ----------------------------------------------------------
 # Audio Playback imports
@@ -363,7 +364,7 @@ def button_mute_pressed(track_no):
 	
 def button_crossfade_pressed(track_no):
     print('button crossfade pressed on track: ', track_no)
-    channels[track_no].setCrossfade()
+    channels[track_no].toggleCrossfade()
 
 def button_random_pressed(track_no):
     print('button random pressed on track: ', track_no)
@@ -534,7 +535,7 @@ def chop_interval(num, prec, max, len):
     return values
 
 class Channel():
-    def __init__(self, channel_id, sound_id, name = "", volume = 100, random = False, random_counter = 1, random_unit = "1h", mute = False, balance = 0):
+    def __init__(self, channel_id, sound_id, name = "", volume = 100, random = False, random_counter = 1, random_unit = "1h", mute = False, balance = 0, crossfade = False):
         try:
             self.sound_object = pygame.mixer.Sound(pygame.mixer.Sound("sounds_named/{}.ogg".format(sound_id)))
         except:
@@ -608,12 +609,10 @@ class Channel():
         if self.muteStatus:
             self.muteChannel(True)
             
+        self.crossfade = crossfade
         if self.random:
             self.crossfade = False
-            button_crossfade[self.channel_id].config(relief=RAISED)
-        else:
-            self.crossfade = True
-            self.setCrossfade(self.crossfade)
+        self.setCrossfade()
        
         self.fade_running = False
         self.playing = True
@@ -679,11 +678,11 @@ class Channel():
             #print('cancel random: ', self.name)
             button_random[self.channel_id].config(relief=RAISED)
             self.play()
-
-    def setCrossfade(self, force=False):
+    def toggleCrossfade(self):
         self.crossfade = not self.crossfade
-        if force:
-            self.crossfade = True
+        self.setCrossfade()
+        
+    def setCrossfade(self):
         if self.crossfade:
             #print('set crossfade: ', self.crossfade)
             button_crossfade[self.channel_id].config(relief=SUNKEN)
@@ -834,7 +833,9 @@ def load_file(xml_file):
     obj = untangle.parse(xml_file)
     ls = []
     for chan_num in range(1,9):
+        #print('track #{}: obj.audio_template = {}'.format(chan_num, obj.audio_template))
         channel = getattr(obj.audio_template, "channel{}".format(chan_num))
+        print('track #{}: channel = {}'.format(chan_num, channel))
         dic = {}
         #dic["sound_id"] = channel.id_audio.cdata
         dic["sound_id"] = channel.name_audio.cdata
@@ -845,6 +846,7 @@ def load_file(xml_file):
         dic["balance"] = int(channel.balance.cdata)
         dic["random_counter"] = int(channel.random_counter.cdata)
         dic["random_unit"] = channel.random_unit.cdata
+        dic["crossfade"] = (channel.crossfade.cdata == "true")
         ls.append(dic)
         #print('dic: ', dic)
     return ls
@@ -900,6 +902,4 @@ if __name__ == "__main__":
     bootstrap_chanlist(load_file(xml_file))
     root.after(CLOCK_TICKER, task)
     mainloop()
-    
-    
     
