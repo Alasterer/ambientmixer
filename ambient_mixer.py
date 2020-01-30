@@ -183,21 +183,11 @@ def About():
 def on_closing():
     closeWindowProperly()
 
-# This function is called when window is closed
-def closeWindowProperly():
-    global pygame
-    global root
-    #pygame.display.quit()
-    pygame.mixer.quit()
-    pygame.quit()
-    sleep(0.1)
-    root.destroy()
-    sys.exit()
 
 #print('len(argv): ', len(sys.argv))
 if len(sys.argv) <= 1:
-    #xml_file = ".presets\\silence.xml"
-    xml_file = script_path + r'\presets\silence.xml'
+    xml_file = r".presets\silence.xml"
+    #xml_file = script_path + r'\presets\silence.xml'
     #xml_file = r'presets\01-sailing-into-fog.xml'
 else:    
     xml_file = sys.argv[1]
@@ -228,11 +218,22 @@ filemenu.add_separator()
 #filemenu.add_command(label="Save", command=Save)
 filemenu.add_command(label="Save as...", command=saveFile)
 filemenu.add_separator()
-filemenu.add_command(label="Exit", command=closeWindowProperly)
+filemenu.add_command(label="Exit", command=root.destroy)
 
 helpmenu = Menu(menu)
 menu.add_cascade(label="Help", menu=helpmenu)
 helpmenu.add_command(label="About...", command=About)
+
+# This function is called when window is closed
+def closeWindowProperly():
+    global pygame
+    global root
+    #pygame.display.quit()
+    pygame.mixer.quit()
+    pygame.quit()
+    sleep(0.1)
+    root.destroy()
+    sys.exit()
 
 # This function is called whenever the button is pressed
 def random_amount_click(event, track_no):
@@ -576,7 +577,7 @@ class Channel():
         global scroll_bar
         global xml_scroll_bar
         scroll_bar[channel_id].set(self.volume)
-        print('mute on track #{}: {}'.format(channel_id, mute))
+        #print('mute on track #{}: {}'.format(channel_id, mute))
 #        if not self.muteStatus:
 #            self.sound_object.set_volume( (int(self.volume)/100.0) * (int(xml_scroll_bar.get()) / 100.0) )   #Normalize volume
 #        else:
@@ -653,14 +654,18 @@ class Channel():
         self.volume = scroll_bar[self.channel_id].get()      # update volume of channel object from current track volume scroll bar position
         l_balance = min(1, 1.0-float(self.balance)/50)
         r_balance = min(1, 1.0+float(self.balance)/50)
-        self.channel_object.set_volume( (float(global_volume)/100.0) * (float(self.volume)/100.0) * l_balance, (float(global_volume)/100.0) * (float(self.volume)/100.0) * r_balance )
+        self.sound_object.set_volume( (float(global_volume)/100.0) * (float(self.volume)/100.0) )
         if self.muteStatus:
             self.volume_before_mute = self.volume
-            self.sound_object.set_volume(0)
+            self.channel_object.set_volume(0, 0)
             button_mute[self.channel_id].config(relief=SUNKEN)
+            #print('setting volume of track #{} to: {}'.format(self.channel_id, 0))
+        #elif self.previously_muted:
         else:
-            self.sound_object.set_volume(float(self.volume_before_mute))
+            ##self.sound_object.set_volume(float(self.volume_before_mute))
+            self.channel_object.set_volume(float(self.volume_before_mute) * l_balance, float(self.volume_before_mute) * r_balance)
             button_mute[self.channel_id].config(relief=RAISED)
+            #print('setting volume of track #{} to: {}'.format(self.channel_id, (float(global_volume)/100.0) * (float(self.volume)/100.0)))
 
     def setRandom(self, force=False):
         self.random = not self.random
@@ -883,10 +888,7 @@ def task():
             if channel.previously_muted:
                 channel.muteChannel(True)       
             deactivatePlayOnceButton(channel.channel_id)
-            if play_track[track_no]:
-                channel.play()
-            else:
-                channel.channel_object.stop()
+            channel.channel_object.stop()
             channel.play_once_running = False
     root.after(CLOCK_TICKER, task)  # reschedule event in CLOCK_TICKER seconds
 
